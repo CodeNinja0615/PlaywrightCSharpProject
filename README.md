@@ -22,30 +22,6 @@ A modern, fast, and reliable **end-to-end UI test automation framework** built w
 
 ---
 
-## ⚙️ Requirements
-
-- [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
-- [Node.js](https://nodejs.org/) (for Allure CLI)
-- [Allure CLI](https://docs.qameta.io/allure/#_installing_a_commandline)
-
-Install Playwright browsers after restoring packages:
-```bash
-pwsh ./bin/Debug/net8.0/playwright.ps1 install
-
-
-```bash
-dotnet restore
-use:- dotnet build
-use:- dotnet test
-use:- PWDEBUG=1 dotnet test
-use:- HEADED=1 dotnet test
-use:- dotnet test -- Playwright.BrowserName=chromium
-use:- dotnet test -- Playwright.BrowserName=chromium Playwright.LaunchOptions.Channel=chromium
-use:- dotnet test -- Playwright.BrowserName=chromium Playwright.LaunchOptions.Channel=msedge
-use:- dotnet test -- Playwright.BrowserName=chromium Playwright.LaunchOptions.Headless=false Playwright.LaunchOptions.Channel=msedge
-use:- allure generate --clean bin/Debug/net8.0/allure-results -o allure-report
-use:- allure open allure-report
-use:- allure serve bin/Debug/net8.0/allure-results
 
 
 PlaywrightCSharpFramework/
@@ -57,3 +33,60 @@ PlaywrightCSharpFramework/
 │
 ├── .azure-pipelines.yml           # CI/CD pipeline config
 └── README.md                      # You are here 😄
+
+
+## ⚙️ Requirements
+
+- [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+- [Node.js](https://nodejs.org/) (for Allure CLI)
+- [Allure CLI](https://docs.qameta.io/allure/#_installing_a_commandline)
+
+# Setup
+- [Guide](https://playwright.dev/dotnet/docs/intro)
+
+# Install Playwright browsers after restoring packages:
+```powershell
+    pwsh ./bin/Debug/net8.0/playwright.ps1 install
+```
+
+# Bash commands
+``` bash commands
+    use:- dotnet restore
+    use:- dotnet build
+    use:- dotnet test
+    use:- PWDEBUG=1 dotnet test
+    use:- HEADED=1 dotnet test
+    use:- dotnet test -- Playwright.BrowserName=chromium
+    use:- dotnet test -- Playwright.BrowserName=chromium Playwright.LaunchOptions.Channel=chromium
+    use:- dotnet test -- Playwright.BrowserName=chromium Playwright.LaunchOptions.Channel=msedge
+    use:- dotnet test -- Playwright.BrowserName=chromium Playwright.LaunchOptions.Headless=false Playwright.LaunchOptions.Channel=msedge
+    use:- allure generate --clean bin/Debug/net8.0/allure-results -o allure-report
+    use:- allure open allure-report
+    use:- allure serve bin/Debug/net8.0/allure-results
+```
+
+# Playwright commands
+```powershell commands to record test (url is optional)
+    use:- pwsh bin/Debug/net8.0/playwright.ps1 codegen demo.playwright.dev/todomvc
+    use:- pwsh bin/Debug/netX/playwright.ps1 codegen --viewport-size="800,600" playwright.dev
+    use:- pwsh bin/Debug/netX/playwright.ps1 codegen --device="iPhone 13" playwright.dev
+```
+
+# SSO test recording
+    pwsh bin/Debug/netX/playwright.ps1 codegen github.com/microsoft/playwright --save-storage=auth.json
+    pwsh bin/Debug/netX/playwright.ps1 codegen --load-storage=auth.json github.com/microsoft/playwright
+
+
+# Multiple Page handle
+```Code (https://playwright.dev/dotnet/docs/pages)
+
+    // Get page after a specific action (e.g. clicking a link)
+    var newPage = await context.RunAndWaitForPageAsync(async () =>
+    {
+        await page.GetByText("open new tab").ClickAsync();
+    });
+    // Interact with the new page normally
+    await newPage.GetByRole(AriaRole.Button).ClickAsync();
+    Console.WriteLine(await newPage.TitleAsync());
+```
+# 

@@ -1,2 +1,4 @@
 PlaywrightTests/bin/
 PlaywrightTests/obj/
+PlaywrightTests/allure-report/
+PlaywrightTests/*.html
