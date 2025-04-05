@@ -1,0 +1,47 @@
+trigger:
+- master
+
+schedules:
+- cron: "30 23 * * *"  # Runs daily at 5:00 AM IST (11:30 PM UTC)
+  displayName: "Daily 5 AM IST Playwright Test Run"
+  branches:
+    include:
+    - master
+  always: true
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+# Install Playwright Browsers after build
+- task: PowerShell@2
+  displayName: 'Install Playwright Browsers'
+  inputs:
+    targetType: 'inline'
+    script: |
+      pwsh ./PlaywrightTests/bin/$(buildConfiguration)/net8.0/playwright.ps1 install
+
+# Run the Playwright Tests
+- task: DotNetCoreCLI@2
+  displayName: 'Run Playwright Tests'
+  inputs:
+    command: 'test'
+    projects: './PlaywrightTests/PlaywrightTests.csproj'
+    arguments: '--configuration $(buildConfiguration) --logger:"console;verbosity=detailed"'
