@@ -23,7 +23,7 @@ A modern, fast, and reliable **end-to-end UI test automation framework** built w
 ---
 
 
-
+```
 PlaywrightCSharpFramework/
 │
 ├── PlaywrightTests/                # Main test project
@@ -33,7 +33,7 @@ PlaywrightCSharpFramework/
 │
 ├── .azure-pipelines.yml           # CI/CD pipeline config
 └── README.md                      # You are here 😄
-
+```
 
 ## ⚙️ Requirements
 
