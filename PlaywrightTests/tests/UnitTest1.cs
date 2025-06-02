@@ -5,9 +5,9 @@ using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
 using Microsoft.Playwright.NUnit;
 using NUnit.Framework;
-using PlaywrightTests.utilities;
+using PlaywrightTests.Utilities;
 
-namespace PlaywrightTests.tests;
+namespace PlaywrightTests.Tests;
 
 // [Parallelizable(ParallelScope.Self)]
 [TestFixture]

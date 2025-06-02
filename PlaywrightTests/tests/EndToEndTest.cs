@@ -1,10 +1,10 @@
 using Allure.Net.Commons;
 using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
-using PlaywrightTests.utilities;
+using PlaywrightTests.Utilities;
 using System.Text.RegularExpressions;
 
-namespace PlaywrightTests.tests;
+namespace PlaywrightTests.Tests;
 
 [TestFixture]
 [AllureEpic("Playwright Epic")]

@@ -3,9 +3,9 @@ using Allure.Net.Commons;
 using Allure.NUnit.Attributes;
 using Microsoft.Playwright;
 using PlaywrightTests.PageObject;
-using PlaywrightTests.utilities;
+using PlaywrightTests.Utilities;
 
-namespace PlaywrightTests.tests;
+namespace PlaywrightTests.Tests;
 
 [TestFixture]
 [AllureEpic("Playwright Epic")]
@@ -50,3 +50,5 @@ public class EndToEndPOMTest: BaseTest
     }
 }
 // HEADED=1 dotnet test --filter "FullyQualifiedName~EndToEndPOMTest"
+// PWDEBUG=1 dotnet test --filter "FullyQualifiedName~EndToEndPOMTest"
+
