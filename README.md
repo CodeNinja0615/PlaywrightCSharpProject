@@ -56,6 +56,8 @@ PlaywrightCSharpFramework/
     use:- dotnet test
     use:- PWDEBUG=1 dotnet test
     use:- HEADED=1 dotnet test
+    use:- HEADED=1 dotnet test --filter "FullyQualifiedName~ClassName"
+    use:- HEADED=1 dotnet test --filter "FullyQualifiedName~ClassName.TestMethodName"
     use:- dotnet test -- Playwright.BrowserName=chromium
     use:- dotnet test -- Playwright.BrowserName=chromium Playwright.LaunchOptions.Channel=chromium
     use:- dotnet test -- Playwright.BrowserName=chromium Playwright.LaunchOptions.Channel=msedge
