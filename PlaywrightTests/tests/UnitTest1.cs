@@ -7,12 +7,12 @@ using Microsoft.Playwright.NUnit;
 using NUnit.Framework;
 using PlaywrightTests.utilities;
 
-namespace PlaywrightTests;
+namespace PlaywrightTests.tests;
 
-[Parallelizable(ParallelScope.Self)]
+// [Parallelizable(ParallelScope.Self)]
 [TestFixture]
 [AllureEpic("Playwright Epic")]
-[AllureFeature("EndToEnd Test")]
+[AllureFeature("Sample Tests")]
 public class ExampleTest : BaseTest
 {
     [Test]

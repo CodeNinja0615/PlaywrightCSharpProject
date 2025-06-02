@@ -11,19 +11,18 @@ using Media = AventStack.ExtentReports.Model.Media;
 namespace PlaywrightTests.utilities
 {
     [AllureNUnit]
-    [AllureSuite("Sample Suite")]
+    [AllureSuite("E2E Test Suite")]
     public class BaseTest : PageTest
     {
         public ExtentReports extent;
         public ExtentTest test;
 
         [OneTimeSetUp]
-
         [AllureOwner("Sameer")]
         public void ExtentSetup()
         {
             string workingDirectory = Environment.CurrentDirectory;
-            string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
+            string projectDirectory = Directory.GetParent(workingDirectory)?.Parent?.Parent?.FullName!;
             String reportPath = projectDirectory + "//index.html";
             var htmpRporter = new ExtentSparkReporter(reportPath);
             extent = new ExtentReports();
@@ -37,20 +36,19 @@ namespace PlaywrightTests.utilities
         public async Task Setup()
         {
             Context.SetDefaultTimeout(60000); // Set timeout to 60 seconds
-            await Context.GrantPermissionsAsync(new[]
+            await Context.GrantPermissionsAsync(new List<string>
             {
-                    "geolocation",
-                    "notifications",
-                    "camera",
-                    "microphone",
-                    "clipboard-read",
-                    "clipboard-write",
-                    "payment-handler",
-                    "accelerometer",
-                    "ambient-light-sensor",
-                    "midi",
-                    "accessibility-events",
-                    "background-sync"
+                "geolocation",
+                "notifications",
+                "camera",
+                "microphone",
+                "clipboard-read",
+                "clipboard-write",
+                "payment-handler",
+                "accelerometer",
+                "ambient-light-sensor",
+                "midi",
+                "background-sync"
             });
             test = extent.CreateTest(TestContext.CurrentContext.Test.Name);
             await Context.Tracing.StartAsync(new()
@@ -95,14 +93,25 @@ namespace PlaywrightTests.utilities
         [TearDown]
         public async Task Teardown()
         {
-            await Context.Tracing.StopAsync(new()
+            // Only stop tracing if it was started
+            if (Context.Tracing != null)
             {
-                Path = Path.Combine(
-                TestContext.CurrentContext.WorkDirectory,
-                "playwright-traces",
-                $"{TestContext.CurrentContext.Test.ClassName}.{TestContext.CurrentContext.Test.Name}.zip"
-            )
-            });
+                try
+                {
+                    await Context.Tracing.StopAsync(new()
+                    {
+                        Path = Path.Combine(
+                        TestContext.CurrentContext.WorkDirectory,
+                        "playwright-traces",
+                        $"{TestContext.CurrentContext.Test.ClassName}.{TestContext.CurrentContext.Test.Name}.zip"
+                    )
+                    });
+                }
+                catch (PlaywrightException)
+                {
+                    // Tracing was not started, ignore
+                }
+            }
             var status = TestContext.CurrentContext.Result.Outcome.Status;
             var stacktrace = TestContext.CurrentContext.Result.StackTrace;
             string fileName = "Screenshot_" + DateTime.Now.ToString("HH_mm_ss") + ".png";
@@ -118,7 +127,6 @@ namespace PlaywrightTests.utilities
                 test.Pass("Test Passed");
             }
         }
-
         public async Task<Media> CaptureScreenShot(IPage page, string screenshotName)
         {
             var screenshotBytes = await page.ScreenshotAsync();
