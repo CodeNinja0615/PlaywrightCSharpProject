@@ -20,11 +20,11 @@ public class LoginPage
     {
         await _page.GotoAsync("https://rahulshettyacademy.com/client/");
     }
-    public async Task SignInAsync(string email)
+    public async Task SignInAsync(string email, string password)
     {
         await _page.WaitForLoadStateAsync(LoadState.NetworkIdle);
         await _email.FillAsync(email);
-        await _password.FillAsync("Sameerking01!");
+        await _password.FillAsync(password);
         await _login.ClickAsync();
     }
 }

@@ -1,10 +1,11 @@
 {
     "email": "akhtarsameer743@gmail.com",
-    "password": "Sameer",
-    "product": [
-        "",
-        ""
+    "password": "Sameerking01!",
+    "products": [
+        "ZARA COAT 3",
+        "IPHONE 13 PRO"
     ],
     "wrong_email": "akhtarsameer74d@gmail.com",
+    "wrong_password": "Sking01!",
     "user_name": "Sameer Akhtar"
 }

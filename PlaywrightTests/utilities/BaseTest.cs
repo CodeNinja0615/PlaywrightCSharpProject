@@ -88,6 +88,10 @@ public class BaseTest : PageTest
         };
     }
 
+    public static JSONReader GetDataParser()
+    {
+        return new JSONReader();
+    }
     [TearDown]
     public async Task Teardown()
     {
